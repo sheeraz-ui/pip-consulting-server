@@ -3,6 +3,8 @@ import cors from 'cors'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
+
 
 import authRoutes from './routes/auth.routes.js'
 import contactRoutes from './routes/contact.routes.js'
@@ -24,9 +26,16 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
+app.use(express.json({ limit: '10mb' }))
+app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+app.use(cookieParser())
+
 // Body parsing
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+
+
+
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
